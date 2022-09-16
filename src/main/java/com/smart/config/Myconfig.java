@@ -49,7 +49,11 @@ public class Myconfig extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN")
 		.antMatchers("/user/**").hasRole("USER")
-		.antMatchers("/**").permitAll().and().formLogin().and().csrf().disable();
+		.antMatchers("/**").permitAll().and().formLogin()
+		.loginPage("/signin")
+		.loginProcessingUrl("/dologin")
+		.defaultSuccessUrl("/user/index")
+		.and().csrf().disable();
 		
 	}
 	

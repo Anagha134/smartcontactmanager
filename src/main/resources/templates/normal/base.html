@@ -17,7 +17,7 @@
   <body>
   
   <!-- navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <nav class=" fixed-top navbar navbar-expand-lg navbar-dark bg-primary">
   
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Smart Contact Manager</a>
@@ -54,22 +54,22 @@
 <!-- navbar end -->
   
     <!-- sidebar start -->
-    <div class="sidebar">
+    <div class="sidebar mt-2">
          <span onclick="toggleSidebar()" class="crossBtn">&times;</span>
     
-         <a href="#" class="item"><i class="fa-solid fa-house-user"></i> Home</a>
+         <a href="#" th:href="@{/user/index}" class="item"><i class="fa-solid fa-house-user"></i> Home</a>
          <a href="#" class="item"><i class="fas fa-id-card-alt"></i> View Contacts</a>
-         <a href="#" class="item"><i class="fas fa-pencil-alt"></i> Add Contact</a>
+         <a href="#" th:href="@{/user/add-contact}" class="item"><i class="fas fa-pencil-alt"></i> Add Contact</a>
          <a href="#" class="item"><i class="fa-solid fa-user"></i> Your Profile</a>
          <a href="#" class="item"><i class="fa-solid fa-gear"></i> Settings</a>
-         <a href="#" class="item"><i class="fas fa-sign-out-alt"></i> Logout</a>
+         <a href="#" th:href="@{/logout}" class="item"><i class="fas fa-sign-out-alt"></i> Logout</a>
          <div class="divider"></div>
     
     </div>
     <!-- sidebar end -->
     
     <!-- content area -->
-    <div class="content">
+    <div class="content mt-5">
           <i onclick="toggleSidebar()"     class="fas fa-bars"></i>
           <div th:replace="${content}"></div>
     

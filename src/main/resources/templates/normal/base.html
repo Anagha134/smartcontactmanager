@@ -52,8 +52,8 @@
 </nav>
 
 <!-- navbar end -->
-  
-    <!-- sidebar start -->
+ 
+ <!-- sidebar start -->
     <div class="sidebar mt-2">
          <span onclick="toggleSidebar()" class="crossBtn">&times;</span>
     
@@ -67,15 +67,30 @@
     
     </div>
     <!-- sidebar end -->
-    
+      
+   
     <!-- content area -->
     <div class="content mt-5">
-          <i onclick="toggleSidebar()"     class="fas fa-bars"></i>
+          <i onclick="toggleSidebar()" class ="fas fa-bars m-3"></i>
+             <!-- message box -->
+             
+             <div th:if="${session.message}"  class="container">
+             
+                    <div th:classappend="${'alert-'+session.message.type}" class="alert  text-center" role="alert">
+                      <span th:text="${session.message.content}"></span>
+                    </div>
+                    
+                    <!--  for removing the message once displayed-->
+                    <th:block th:text="${#session.removeAttribute('message')}"> </th:block>
+             
+             </div>
+          
+          
           <div th:replace="${content}"></div>
     
     
     </div>
-    <!-- content area  end -->
+    <!-- conten area  end -->
 
     <!-- Optional JavaScript; choose one of the two! -->
 

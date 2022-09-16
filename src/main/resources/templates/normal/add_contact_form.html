@@ -18,9 +18,9 @@
 	                
 	                    <form action="" 
 	                    th:object="${contact}" 
-	                    enctype="multipart/from-data" 
+	                    enctype="multipart/form-data" 
 	                    method="POST" 
-	                    th:action="@{user/process-contact}"
+	                    th:action="@{/user/process-contact}"
 	                    class="mt-2">
 	                    
 	                     <!-- First Name  --> 
@@ -115,7 +115,7 @@
 	                    
 	                    </div>
 	                    
-	                    <!-- contcat image -->
+	                    <!-- contact image -->
 	                    <div class="custom-file mt-2">
 	                        <input type="file" name="profileImage" />
 	                    

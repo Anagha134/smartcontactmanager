@@ -189,20 +189,48 @@ public class UserController {
 		String userName = principal.getName();
 		
 		User user= this.userRepository.getUserByUserName(userName);
-		//if user who is login in and from contact that user's is matched
+		
+		
+		
+		
+		//if user who is login in and from contact that user's  id is matched
 		//that means they are same user then he can see the contacts
 		if(user.getId() == contact.getUser().getId()) {
 			
 			model.addAttribute("contact",contact);
 			model.addAttribute("title",contact.getName());
 			
-			
-			
-	     }
-		
-		
-	
-		
+		}
 		return "normal/contact_detail";
+	}
+	
+	
+	//delete contact handler
+	@GetMapping("/delete/{cid}")
+	public String deleteContact(@PathVariable("cid")Integer cId,Model model,HttpSession session)
+	{
+		//to get id from contact repository
+		//to get specify contact form using id;
+	    Contact contact = this .contactRepository.findById(cId).get();
+	    
+	 
+	    
+	    
+	    System.out.println("Contact "+contact.getcId());
+	    
+	    //this is unlink from user.....
+	    contact.setUser(null);
+	    
+	    
+	    //remove the photo 
+	    
+	    
+	    
+	    // [check.... ]delete the contact 
+	    this.contactRepository.delete(contact);
+	    
+	    
+	    session.setAttribute("message", new Message("Contact deleted successfully!!!","success"));
+		return "redirect:/user/show-contacts/0";
 	}
 }

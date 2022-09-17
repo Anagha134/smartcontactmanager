@@ -39,7 +39,7 @@
                           </td>
                           <td th:text="${c.Phone}">@mdo</td>
                           <td>
-                             <button class="btn btn-danger btn-small">Delete</button>
+                             <a href="#" th:onclick="|deleteContact(${c.cId})|" class="btn btn-danger btn-small">Delete</a>
                               <button class="btn btn-primary btn-small">Update</button>
                           </td>
                         </tr>

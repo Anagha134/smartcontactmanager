@@ -52,7 +52,13 @@
                           <div class="conatiner">
                           
                                 <button  th:onclick="|deleteContact(${contact.cId})|" class="btn btn-danger btn-small">Delete</button>
-                                <button class="btn btn-primary btn-small">Update</button>
+                                <!-- if its a post method make a use of form  -->
+                                <form method="post" th:action="@{'/user/update-contact/'+${contact.cId}}" class="mt-2">
+                             
+                                      <button type="submit" class="btn btn-primary btn-small">Update</button>
+                             
+                             
+                                </form>
                           
                           
                           </div>

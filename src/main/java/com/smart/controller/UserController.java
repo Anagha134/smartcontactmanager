@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -248,6 +249,70 @@ public class UserController {
 		return "normal/update_form";
 		
 	}
+	
+	//update contact handler --when form is submitted for update 
+	@RequestMapping(value="/process-update",method = RequestMethod.POST)
+	public String updateHandler(@ModelAttribute Contact contact,
+			@RequestParam("profileImage") MultipartFile file,
+			Model m,HttpSession session,Principal principal) {
+		
+		try {
+			
+			//old contact details fetch
+			Contact oldcontactDetails = this.contactRepository.findById(contact.getcId()).get();
+			
+			if(!file.isEmpty()) {
+				//rewrite if file is not empty
+				
+				//delete old photo
+				
+				//to find the path of file
+				File deletefile = new ClassPathResource("static/img").getFile();
+				File file1=new File(deletefile,oldcontactDetails.getImage());
+				file1.delete();
+			
+				
+				
+				
+				
+				//update new photo
+				
+				//to find the path of file
+				File savefile = new ClassPathResource("static/img").getFile();
+				
+				Path path = Paths.get(savefile.getAbsolutePath()+File.separator+file.getOriginalFilename());
+				
+				//
+				Files.copy(file.getInputStream(),path ,StandardCopyOption.REPLACE_EXISTING);
+				//putting same name in contact database
+				contact.setImage(file.getOriginalFilename());
+				
+			}else {
+				//if file is empty the old pic is kept as new one
+				contact.setImage(oldcontactDetails.getImage());
+			}
+			
+			User user = this.userRepository.getUserByUserName(principal.getName());
+			//update the contacts
+			contact.setUser(user);
+			
+			this.contactRepository.save(contact);
+			
+			session.setAttribute("message", new Message("Your Contact is updated...","success"));
+			
+			
+			
+		}catch(Exception e){
+			
+		}
+		
+		
+		System.out.println("CONTACT NAME"+contact.getName());
+		System.out.println("CONTACT ID"+contact.getcId());
+		return "redirect:/user/"+contact.getcId()+"/contact";
+	}
+	
+	
 	
 	
 }

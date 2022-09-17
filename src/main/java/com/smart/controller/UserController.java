@@ -222,7 +222,7 @@ public class UserController {
 	    contact.setUser(null);
 	    
 	    
-	    //remove the photo 
+	    
 	    
 	    
 	    
@@ -233,4 +233,21 @@ public class UserController {
 	    session.setAttribute("message", new Message("Contact deleted successfully!!!","success"));
 		return "redirect:/user/show-contacts/0";
 	}
+	
+	//open update form handler
+	
+	@PostMapping("/update-contact/{cid}")
+	public String updateForm(@PathVariable("cid")Integer cId,Model model) {
+		model.addAttribute("title","Update contact");
+		//seaching the id  from contact and the getting the contact from id... 
+	 	Contact contact =  this.contactRepository.findById(cId).get();
+		
+	 	model.addAttribute("contact",contact);
+	 	
+	 	
+		return "normal/update_form";
+		
+	}
+	
+	
 }

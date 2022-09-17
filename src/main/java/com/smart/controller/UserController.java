@@ -177,14 +177,28 @@ public class UserController {
 	
 	//showing particular contact details
 	@RequestMapping("/{cId}/contact")
-	public String showContactDetails(@PathVariable("cId")Integer cId,Model model) {
+	public String showContactDetails(@PathVariable("cId")Integer cId,Model model,Principal principal) {
 		
 		System.out.println("CID"+cId);
 		
 		Optional<Contact> contactOptional =this.contactRepository.findById(cId);
 		Contact contact =contactOptional.get();
 		
-		model.addAttribute("contact",contact);
+		
+		//storing the current user who is login in
+		String userName = principal.getName();
+		
+		User user= this.userRepository.getUserByUserName(userName);
+		//if user who is login in and from contact that user's is matched
+		//that means they are same user then he can see the contacts
+		if(user.getId() == contact.getUser().getId()) {
+			
+			model.addAttribute("contact",contact);
+			model.addAttribute("title",contact.getName());
+			
+			
+			
+	     }
 		
 		
 	

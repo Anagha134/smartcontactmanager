@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -30,6 +31,9 @@ import com.smart.dao.UserRepository;
 import com.smart.entities.Contact;
 import com.smart.entities.User;
 import com.smart.helper.Message;
+
+
+
 
 @Controller
 @RequestMapping("/user") //created a user handler url pattern
@@ -91,6 +95,7 @@ public class UserController {
 		if(file.isEmpty()) {
 			//if file is empty then try our message
 			System.out.println("File is empty");
+			contact.setImage("contact.png");
 			
 			
 			
@@ -170,5 +175,20 @@ public class UserController {
 		return "normal/show_contacts";
 	}
 	
+	//showing particular contact details
+	@RequestMapping("/{cId}/contact")
+	public String showContactDetails(@PathVariable("cId")Integer cId,Model model) {
+		
+		System.out.println("CID"+cId);
+		
+		Optional<Contact> contactOptional =this.contactRepository.findById(cId);
+		Contact contact =contactOptional.get();
+		
+		model.addAttribute("contact",contact);
+		
+		
 	
+		
+		return "normal/contact_detail";
+	}
 }

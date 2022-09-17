@@ -208,7 +208,7 @@ public class UserController {
 	
 	//delete contact handler
 	@GetMapping("/delete/{cid}")
-	public String deleteContact(@PathVariable("cid")Integer cId,Model model,HttpSession session)
+	public String deleteContact(@PathVariable("cid")Integer cId,Model model,HttpSession session,Principal principal)
 	{
 		//to get id from contact repository
 		//to get specify contact form using id;
@@ -220,15 +220,16 @@ public class UserController {
 	    System.out.println("Contact "+contact.getcId());
 	    
 	    //this is unlink from user.....
-	    contact.setUser(null);
+	  
 	    
+	    //taking  a user
+	    User user = this.userRepository.getUserByUserName(principal.getName());
 	    
+	    //take all contacts and then delete the particular contact 
+	    // calls the equal method and check if deletedcontact matched or not if done then its removed
+	    user.getContacts().remove(contact);
 	    
-	    
-	    
-	    
-	    // [check.... ]delete the contact 
-	    this.contactRepository.delete(contact);
+	    this.userRepository.save(user);
 	    
 	    
 	    session.setAttribute("message", new Message("Contact deleted successfully!!!","success"));

@@ -12,10 +12,14 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -139,8 +143,11 @@ public class UserController {
 	}
 	
 	//show contacts handlers
-	@GetMapping("/show-contacts")
-	public String showContacts(Model m,Principal principal) {
+	
+	//per page =5 contacts  (n)
+	//current page =0 (page)
+	@GetMapping("/show-contacts/{page}")
+	public String showContacts(@PathVariable ("page")Integer page ,Model m,Principal principal) {
 		//want to display the list of contacts from database
 		m.addAttribute("title","Show User Contacts");
 		//first find the which user is login with help of principal
@@ -148,13 +155,17 @@ public class UserController {
 	
 		User user = this.userRepository.getUserByUserName(userName);
 		
+		//pageable is parent class of Page Request.
+		Pageable pageable = PageRequest.of(page,8);
 		//and then display all contacts of that user's from database
-		List<Contact> contacts = this.contactRepository.findContactsByUser(user.getId());
+		Page<Contact> contacts = this.contactRepository.findContactsByUser(user.getId(),pageable);
 		
-		
+		//display all contacts
 		m.addAttribute("contacts",contacts);
-	
-		
+		//current pages
+	    m.addAttribute("currentpage",page);
+	    //get total pages 
+		m.addAttribute("totalPages",contacts.getTotalPages());
 		
 		return "normal/show_contacts";
 	}

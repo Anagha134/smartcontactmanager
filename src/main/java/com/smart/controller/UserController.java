@@ -322,9 +322,9 @@ public class UserController {
 	}
 	
 	//open setting handler
-	//@GetMapping("/settings")
-	//public String openSetting() {
-		//return "normal/setting";
-	//}
+	@GetMapping("/settings")
+	public String openSetting() {
+		return "normal/setting";
+	}
 	
 }

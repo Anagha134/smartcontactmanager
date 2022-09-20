@@ -16,7 +16,24 @@
                         <div class="alert alert-success mt-3" role="alert">
                                we have successfully otp to your email....
                         </div>
-                        <form action="" th:action="@{/send-otp}" method="post">
+                          
+                          <!-- message box -->
+             
+                           <div th:if="${session.message}"  class="container">
+             
+                              <div  class="alert alert-danger my-2 text-center" role="alert">
+                                   <span th:text="${session.message}"></span>
+                              </div>
+                    
+                              <!--  for removing the message once displayed-->
+                              <th:block th:text="${#session.removeAttribute('message')}"> </th:block>
+             
+                            </div>
+                        
+                        
+                        
+                        
+                        <form action="" th:action="@{/verify-otp}" method="post">
                           <div class="form-group">
                             <input  name="otp" required type="text" placeholder="Enter OTP here"  class="form-control" />
                           

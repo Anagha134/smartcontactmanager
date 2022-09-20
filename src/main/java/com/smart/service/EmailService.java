@@ -66,7 +66,8 @@ public class EmailService {
       	   	  m.setSubject(subject);
       	   	  
       	   	  //adding text to message
-      	   	  m.setText(message);
+      	   	 // m.setText(message);
+      	   	  m.setContent(message,"text/html");
       	   	  
       	   	  //send
       	   	  //step 3: send the message using transport class
